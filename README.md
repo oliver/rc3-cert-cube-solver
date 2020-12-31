@@ -68,3 +68,8 @@ There a some cases which the explorer code doesn't cannot handle, and where it w
 Also, I haven't tested the code after cleaning it up (cardinal sin, I know; but the maze server was already shut down).
 Therefore the current code might have bugs that were introduced during cleanup.
 If unsure, check out the very first commit; that code was actually used successfully (but is difficult to use).
+
+
+## Results for Successful Run on "okmvqn" Maze Iteration
+The room graph for the last successful run in the last rc3 maze setup (with identifier "okmvqn") are stored in results-okmvqn/ subdirectory.
+The exit room in that setup has ID 1683.
