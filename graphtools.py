@@ -1,92 +1,76 @@
 #!/usr/bin/env python
+# coding: utf-8
 
-#import graphviz
+#
+# Prints the shortest path between two rooms in the rc3 CERT Cube room graph.
+#
+
+
 from collections import deque
 import json
 import sys
 
-#pathCache = []
 
-def find_shortest_path(graph, start, end):
-    dist = {start: [start]}
+def findShortestPath(roomGraph, start, end):
+    """
+    Returns the shortest (?) path between two nodes in the room graph.
+    Each path element is a tuple of two elements:
+    - the next room number
+    - the direction to take to get into that room
+
+    Based on the code by Eryk Kopczyński from https://www.python.org/doc/essays/graphs/
+    """
+    dist = {start: [(start, "")]}
     q = deque([start])
     while len(q):
         at = q.popleft()
-        for (next,d) in graph[at]:
+        for d in roomGraph[at]:
+            next = roomGraph[at][d]
             if next not in dist:
-                #dist[next] = [(dist[at],d), (next,d)]
-                dist[next] = [dist[at], (next, d)]
+                dist[next] = [dist[at], (next, d) ]
                 q.append(next)
-    return dist.get(end)
 
-#def find_path(graph, start, end, path=[]):
-    #path = path + [start]
-    #if start == end:
-        #return path
-    #if not graph.has_key(start):
-        #return None
-    #for node in graph[start]:
-        #if node not in path:
-            #newpath = find_path(graph, node, end, path)
-            #if newpath: return newpath
-    ##for d in graph[start]:
-        ##node = graph[start][d]
-        ##if node not in path:
-            ##newpath = find_path(graph, node, end, path)
-            ##if newpath: return newpath
-    #return None
-
-#def loadGraph()
-
-#def unwrapPath
-
-if __name__ == "__main__":
-    inFile = sys.argv[1]
-    #outFile = sys.argv[2]
-    startRoom = int(sys.argv[2])
-    targetRoom = int(sys.argv[3])
-
-    fp = open(inFile)
-    #rooms = json.load(fp)
-    rooms = {}
-    loadedRooms = json.load(fp)
-    for rId in loadedRooms:
-        #rooms[int(rId)] = {}
-        rooms[int(rId)] = []
-        for d in loadedRooms[rId]:
-            #rooms[int(rId)][d] = loadedRooms[rId][d]
-            #rooms[int(rId)].append(loadedRooms[rId][d])
-            rooms[int(rId)].append( (loadedRooms[rId][d], d) )
-
-    fp.close()
-    print "loaded %d rooms" % len(rooms)
-    #print rooms
-
-    #paths = {}
-    #for r1 in rooms:
-        #for r2 in rooms:
-            #find_path(rooms, r1, r2)
-
-    #path = find_path(rooms, startRoom, targetRoom)
-    path = find_shortest_path(rooms, startRoom, targetRoom)
-    #print path
-    
+    # path is now a nested list of path elements; "unwrap" it into a flat list:
     def unwrap(p):
         if isinstance(p, list):
-            #return unwrap(p[0]) + [ tuple(p[1:]) ]
             return unwrap(p[0]) + p[1:]
         else:
             return [ p ]
-    
-    path = unwrap(path)
-    print "path has %d steps" % len(path)
+
+    return unwrap(dist.get(end))
+
+
+def toReadableDirection (d):
+    directionNames = {
+        "u": "up",
+        "d": "down",
+        "l": "left",
+        "r": "right"
+    }
+    return directionNames[d]
+
+
+if __name__ == "__main__":
+    if len(sys.argv) != 4:
+        print "Usage: %s <room graph JSON file> <id of start room> <id of target room>" % sys.argv[0]
+        sys.exit(1)
+
+    inFile = sys.argv[1]
+    startRoom = int(sys.argv[2])
+    targetRoom = int(sys.argv[3])
+
+    # load room graph from JSON file
+    rooms = {}
+    with open(inFile) as fp:
+        loadedRooms = json.load(fp)
+        for rId in loadedRooms:
+            # convert JSON keys (which are strings) into integers:
+            rooms[int(rId)] = loadedRooms[rId]
+    print "loaded %d rooms" % len(rooms)
+
+    path = findShortestPath(rooms, startRoom, targetRoom)
+
+    print "path from %d to %d has %d steps:" % (startRoom, targetRoom, len(path))
     for el in path[1:]:
-        sys.stdout.write("%s (zu %s); " % (el[1], el[0]))
-
+        sys.stdout.write("%s (into %s); " % (toReadableDirection(el[1]), el[0]))
     print ""
-
-    #for el in path:
-        #while isinstance(el, list):
-        ##while len(el) > 1:
-            #el = el[0]
-        #print el
