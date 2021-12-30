@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 #
 # Starts Selenium Chrome webdriver (ie. opens a Chrome window which remains open).
@@ -17,7 +17,7 @@ from selenium.webdriver.chrome.options import Options
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print "Usage: %s <URL for some room in the maze>" % sys.argv[0]
+        print("Usage: %s <URL for some room in the maze>" % sys.argv[0])
         sys.exit(1)
 
     startUrl = sys.argv[1]
@@ -34,5 +34,5 @@ if __name__ == "__main__":
     driver = webdriver.Chrome(chrome_options=opt)
     driver.get(startUrl)
 
-    print "driver URL: %s" % driver.command_executor._url
-    print "driver session: %s" % driver.session_id
+    print("driver URL: %s" % driver.command_executor._url)
+    print("driver session: %s" % driver.session_id)
