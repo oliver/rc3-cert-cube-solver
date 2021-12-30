@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding: utf-8
 
 #
@@ -49,9 +49,9 @@ class CubeRooms:
                 for d in loadedRooms[rId]:
                     self.rooms[int(rId)][d] = loadedRooms[rId][d]
         except:
-            print "no rooms loaded"
+            print("no rooms loaded")
         else:
-            print "loaded %d start rooms" % len(self.rooms)
+            print("loaded %d start rooms" % len(self.rooms))
             self._save() # save loaded data again, to get a nicely formatted file
 
     def addRoom (self, startRoom, direction, resultRoom):
@@ -61,13 +61,13 @@ class CubeRooms:
         """
         assert direction in allDirections
 
-        if not(self.rooms.has_key(startRoom)):
+        if not(startRoom in self.rooms):
             self.rooms[startRoom] = {}
-        if self.rooms[startRoom].has_key(direction):
-            print "this result (%d,%s -> %d) already exists" % (startRoom, direction, resultRoom)
+        if direction in self.rooms[startRoom]:
+            print("this result (%d,%s -> %d) already exists" % (startRoom, direction, resultRoom))
             if self.rooms[startRoom][direction] != resultRoom:
-                print "ERROR: new result (%d,%s -> %d) does not match previous result (%d,%s -> %d)!" % (
-                    startRoom, direction, resultRoom, startRoom, direction, self.rooms[startRoom][direction])
+                print("ERROR: new result (%d,%s -> %d) does not match previous result (%d,%s -> %d)!" % (
+                    startRoom, direction, resultRoom, startRoom, direction, self.rooms[startRoom][direction]))
                 sys.exit(1)
             else:
                 return
@@ -80,7 +80,7 @@ class CubeRooms:
         Returns a dict of known connections from the specified room.
         Dict keys are the directions; values are the target rooms.
         """
-        if not(self.rooms.has_key(room)):
+        if not(room in self.rooms):
             return {}
         return self.rooms[room]
 
@@ -122,21 +122,21 @@ class CubeRooms:
         targetPath = None
         for targetRoom in self.rooms:
             if len(self.rooms[targetRoom]) < 4:
-                print "candidate: %d" % targetRoom
+                print("candidate: %d" % targetRoom)
                 path = unwrap(self.find_shortest_path(startRoom, targetRoom))[1:]
                 if path and (targetPath is None or len(path) < len(targetPath)):
                     targetPath = path
 
         if targetPath is None:
-            print "all rooms are complete!"
+            print("all rooms are complete!")
             return None
 
-        print "shortest path to incomplete room: %s" % targetPath
+        print("shortest path to incomplete room: %s" % targetPath)
         return targetPath
 
 
 if len(sys.argv) != 4:
-    print "Usage: %s <room graph JSON file> <Selenium webdriver URL> <Selenium webdriver session id>" % sys.argv[0]
+    print("Usage: %s <room graph JSON file> <Selenium webdriver URL> <Selenium webdriver session id>" % sys.argv[0])
     sys.exit(1)
 
 roomJsonFile = sys.argv[1]
@@ -171,35 +171,35 @@ def getRoomId(url):
 while True:
     oldUrl = driver.current_url
     startId = getRoomId(oldUrl)
-    print "old room: %d" % startId
+    print("old room: %d" % startId)
 
     knownResults = rooms.get(startId)
-    print "have already explored %d directions from here (%s)" % (
-        len(knownResults), ",".join(knownResults.keys()))
+    print("have already explored %d directions from here (%s)" % (
+        len(knownResults), ",".join(list(knownResults.keys()))))
     nextDir = None
     for d in allDirections:
-        if not knownResults.has_key(d):
+        if d not in knownResults:
             nextDir = d
             break
     if nextDir is None:
-        print "have already explored all directions of %d!" % startId
+        print("have already explored all directions of %d!" % startId)
         path = rooms.getPathToNextIncomplete(startId)
-        print "path to next goal: %s" % path
+        print("path to next goal: %s" % path)
         nextDir = path[0][1]
 
-    print "next direction: '%s'" % nextDir
+    print("next direction: '%s'" % nextDir)
     actionChains[nextDir].perform()
 
     # wait for a few seconds until room URL has changed:
     for i in range(10):
         time.sleep(0.5)
         newUrl = driver.current_url
-        print "new room: %d" % getRoomId(newUrl)
+        print("new room: %d" % getRoomId(newUrl))
         if newUrl != oldUrl:
             break
-        print "waiting a bit more..."
+        print("waiting a bit more...")
     else:
-        print "%d,%s leads again to %d!" % (startId, nextDir, startId)
+        print("%d,%s leads again to %d!" % (startId, nextDir, startId))
         sys.exit(1)
 
     rooms.addRoom(startId, nextDir, getRoomId(newUrl))
