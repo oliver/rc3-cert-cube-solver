@@ -149,19 +149,6 @@ driver = webdriver.Remote(command_executor=driverUrl, desired_capabilities={})
 driver.close() # this prevents the dummy browser
 driver.session_id = driverSession
 
-# set up Selenium "action chains" which can be executed to walk into the specified direction:
-cv = driver.find_element_by_tag_name("canvas")
-
-actionChains = {}
-actionChains[DIR_UP] = ActionChains(driver)
-actionChains[DIR_UP].click(cv).key_down(Keys.ARROW_UP)
-actionChains[DIR_DOWN] = ActionChains(driver)
-actionChains[DIR_DOWN].click(cv).key_down(Keys.ARROW_DOWN)
-actionChains[DIR_LEFT] = ActionChains(driver)
-actionChains[DIR_LEFT].click(cv).key_down(Keys.ARROW_LEFT)
-actionChains[DIR_RIGHT] = ActionChains(driver)
-actionChains[DIR_RIGHT].click(cv).key_down(Keys.ARROW_RIGHT)
-
 
 def getRoomId(url):
     "Extracts the room id (as integer) from a room URL."
@@ -188,6 +175,20 @@ while True:
         nextDir = path[0][1]
 
     print("next direction: '%s'" % nextDir)
+
+    # set up Selenium "action chains" which can be executed to walk into the specified direction:
+    cv = driver.find_element_by_tag_name("canvas")
+
+    actionChains = {}
+    actionChains[DIR_UP] = ActionChains(driver)
+    actionChains[DIR_UP].click(cv).key_down(Keys.ARROW_UP)
+    actionChains[DIR_DOWN] = ActionChains(driver)
+    actionChains[DIR_DOWN].click(cv).key_down(Keys.ARROW_DOWN)
+    actionChains[DIR_LEFT] = ActionChains(driver)
+    actionChains[DIR_LEFT].click(cv).key_down(Keys.ARROW_LEFT)
+    actionChains[DIR_RIGHT] = ActionChains(driver)
+    actionChains[DIR_RIGHT].click(cv).key_down(Keys.ARROW_RIGHT)
+
     actionChains[nextDir].perform()
 
     # wait for a few seconds until room URL has changed:
