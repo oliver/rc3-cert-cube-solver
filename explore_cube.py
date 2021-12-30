@@ -181,13 +181,13 @@ while True:
 
     actionChains = {}
     actionChains[DIR_UP] = ActionChains(driver)
-    actionChains[DIR_UP].click(cv).key_down(Keys.ARROW_UP)
+    actionChains[DIR_UP].click(cv).key_down(Keys.SHIFT).key_down(Keys.ARROW_UP)
     actionChains[DIR_DOWN] = ActionChains(driver)
-    actionChains[DIR_DOWN].click(cv).key_down(Keys.ARROW_DOWN)
+    actionChains[DIR_DOWN].click(cv).key_down(Keys.SHIFT).key_down(Keys.ARROW_DOWN)
     actionChains[DIR_LEFT] = ActionChains(driver)
-    actionChains[DIR_LEFT].click(cv).key_down(Keys.ARROW_LEFT)
+    actionChains[DIR_LEFT].click(cv).key_down(Keys.SHIFT).key_down(Keys.ARROW_LEFT)
     actionChains[DIR_RIGHT] = ActionChains(driver)
-    actionChains[DIR_RIGHT].click(cv).key_down(Keys.ARROW_RIGHT)
+    actionChains[DIR_RIGHT].click(cv).key_down(Keys.SHIFT).key_down(Keys.ARROW_RIGHT)
 
     actionChains[nextDir].perform()
 
