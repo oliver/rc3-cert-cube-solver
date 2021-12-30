@@ -13,6 +13,8 @@ import sys
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.utils import ChromeType
 
 
 if __name__ == "__main__":
@@ -30,8 +32,9 @@ if __name__ == "__main__":
         "profile.default_content_setting_values.geolocation": 2,
         "profile.default_content_setting_values.notifications": 2
     })
+    opt.add_experimental_option("detach", True) # keep browser window open after this script has exited
 
-    driver = webdriver.Chrome(chrome_options=opt)
+    driver = webdriver.Chrome(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install(), options=opt)
     driver.get(startUrl)
 
     print("driver URL: %s" % driver.command_executor._url)

@@ -17,16 +17,8 @@ The remaining rooms took a long time, because they required repeatedly walking t
 ```
 virtualenv venv
 source venv/bin/activate
-pip install selenium graphviz
+pip install selenium graphviz webdriver-manager
 ```
-
-- install Chrome driver for Selenium (see https://selenium-python.readthedocs.io/installation.html#drivers); something like this:
-```
-wget https://chromedriver.storage.googleapis.com/87.0.4280.88/chromedriver_linux64.zip
-unzip chromedriver_linux64.zip
-export PATH=$PATH:$(pwd)
-```
-
 
 ## Usage
 
