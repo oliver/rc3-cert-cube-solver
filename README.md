@@ -1,13 +1,13 @@
 # rc3 CERT Cube Solver
 
-This is a solver for the "CERT Cube", a maze in the virtual world at [rc3 event 2020](https://events.ccc.de/2020/09/04/rc3-remote-chaos-experience/).
+This is a solver for the "CERT Cube", a maze in the virtual world at [rc3 event 2020](https://events.ccc.de/2020/09/04/rc3-remote-chaos-experience/) and following.
 
 The solver works by using [Selenium](https://www.selenium.dev/) to remote-control a web browser window, and walk through all rooms to explore the maze.
 This is used to create a graph of all rooms and their exits, which is saved as JSON file.
 Afterwards the graph information can be used to find the shortest path through the maze.
 
 Note that exploring the maze can take several hours.
-In my successful run the bot explored 126 rooms and 499 connections until it found the exit.
+In my successful run for rc3 2020, the bot explored 126 rooms and 499 connections until it found the exit.
 The first ca. 80 rooms were explored within maybe an hour or less, because they were closely connected.
 The remaining rooms took a long time, because they required repeatedly walking through long one-way connections.
 
@@ -62,6 +62,10 @@ Therefore the current code might have bugs that were introduced during cleanup.
 If unsure, check out the very first commit; that code was actually used successfully (but is difficult to use).
 
 
-## Results for Successful Run on "okmvqn" Maze Iteration
-The room graph for the last successful run in the last rc3 maze setup (with identifier "okmvqn") are stored in results-okmvqn/ subdirectory.
+## Results for Successful Run on "okmvqn" Maze Iteration (rc3 2020)
+The room graph for the last successful run in the 2020 rc3 maze setup (with identifier "okmvqn") are stored in results-okmvqn/ subdirectory.
 The exit room in that setup has ID 1683.
+
+## Results for Successful Run on "snfzvo" Maze Iteration (rc3 2021)
+The room graph for the last successful run in the 2021 rc3 maze setup (with identifier "snfzvo") are stored in results-snfzvo/ subdirectory.
+The exit room in that setup has ID 2312.
