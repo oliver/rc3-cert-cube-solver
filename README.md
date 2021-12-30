@@ -26,7 +26,13 @@ pip install selenium graphviz webdriver-manager
 `mkdir run1`
 
 - start Selenium browser window (in background):  
-`./start_driver.py https://visit.at.rc3.world/as/cert &`
+`./start_driver.py https://rc3.world &`
+
+- in the browser window:
+  - log in
+  - enter the 2D world
+    - this might open in a new tab, which can be closed
+  - in the first browser tab, go to URL https://visit.rc3.world/@/rc3_21/cert/cube/0.json#start (to enter CERT Cube)
 
 - start the explorer script (use the "driver URL" and "driver session" printed by `start_driver.py`):  
 `./explore_cube.py run1/rooms.json http://127.0.0.1:46079 da974f8e950add8979c15aaca8c4842f`
