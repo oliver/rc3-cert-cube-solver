@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding: utf-8
 
 #
@@ -52,7 +52,7 @@ def toReadableDirection (d):
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
-        print "Usage: %s <room graph JSON file> <id of start room> <id of target room>" % sys.argv[0]
+        print("Usage: %s <room graph JSON file> <id of start room> <id of target room>" % sys.argv[0])
         sys.exit(1)
 
     inFile = sys.argv[1]
@@ -66,11 +66,11 @@ if __name__ == "__main__":
         for rId in loadedRooms:
             # convert JSON keys (which are strings) into integers:
             rooms[int(rId)] = loadedRooms[rId]
-    print "loaded %d rooms" % len(rooms)
+    print("loaded %d rooms" % len(rooms))
 
     path = findShortestPath(rooms, startRoom, targetRoom)
 
-    print "path from %d to %d has %d steps:" % (startRoom, targetRoom, len(path))
+    print("path from %d to %d has %d steps:" % (startRoom, targetRoom, len(path)))
     for el in path[1:]:
         sys.stdout.write("%s (into %s); " % (toReadableDirection(el[1]), el[0]))
-    print ""
+    print("")
