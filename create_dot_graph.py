@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 #
 # Creates a Dot graph of the rooms in the rc3 CERT Cube maze.
@@ -12,7 +12,7 @@ import sys
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        print "Usage: %s <room graph JSON file> <Dot graph output file>" % sys.argv[0]
+        print("Usage: %s <room graph JSON file> <Dot graph output file>" % sys.argv[0])
         sys.exit(1)
 
     inFile = sys.argv[1]
@@ -20,7 +20,7 @@ if __name__ == "__main__":
 
     with open(inFile) as fp:
         rooms = json.load(fp)
-    print "loaded %d rooms" % len(rooms)
+    print("loaded %d rooms" % len(rooms))
 
     dot = graphviz.Digraph()
 
@@ -41,14 +41,14 @@ if __name__ == "__main__":
             dot.edge(str(startRoom), str(resultRoom), label=d)
             numEdges+=1
 
-    print "have %d room connections" % numEdges
+    print("have %d room connections" % numEdges)
 
     # display how many rooms and directions have been explored so far:
     for i in range(5):
-        print "%d directions explored: %d rooms (%s)" % (i, len(buckets[i]), buckets[i])
+        print("%d directions explored: %d rooms (%s)" % (i, len(buckets[i]), buckets[i]))
 
     with open(outFile, "w") as fp:
         fp.write(dot.source)
 
-    print "Convert to PNG image eg. with:"
-    print "  sfdp -x -Goverlap=scale -Tpng %s > graph.png" % outFile
+    print("Convert to PNG image eg. with:")
+    print("  sfdp -x -Goverlap=scale -Tpng %s > graph.png" % outFile)
