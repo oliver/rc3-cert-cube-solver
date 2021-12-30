@@ -25,8 +25,8 @@ pip install selenium graphviz webdriver-manager
 - create directory for results:  
 `mkdir run1`
 
-- start Selenium browser window:  
-`./start_driver.py https://visit.at.rc3.world/as/cert`
+- start Selenium browser window (in background):  
+`./start_driver.py https://visit.at.rc3.world/as/cert &`
 
 - start the explorer script (use the "driver URL" and "driver session" printed by `start_driver.py`):  
 `./explore_cube.py run1/rooms.json http://127.0.0.1:46079 da974f8e950add8979c15aaca8c4842f`
